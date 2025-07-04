@@ -14,6 +14,16 @@ SDL_ZIP_URL = https://github.com/libsdl-org/SDL/releases/download/release-$(SDL_
 BUILD_DIR = build
 BUILD_EXE = $(BUILD_DIR)/$(APP_NAME)
 
+CPPCHECK_FLAGS = --enable=warning,style,performance,portability \
+	--std=c99 --inline-suppr --check-level=exhaustive --addon=y2038.py
+CPPCHECK_LINT_FLAGS = $(CPPCHECK_FLAGS) -q --error-exitcode=1
+CPPCHECK_FIX_FLAGS = $(CPPCHECK_FLAGS)
+UNCRUSTIFY_FLAGS = -c uncrustify.cfg
+UNCRUSTIFY_CHECK_FLAGS = $(UNCRUSTIFY_FLAGS) -q --check
+UNCRUSTIFY_FIX_FLAGS = $(UNCRUSTIFY_FLAGS) --no-backup
+
+SRC = main.c $$(find src -name "*.[ch]")
+
 .PHONY: help
 help:
 	@echo "  Usage: make <target>"
@@ -69,6 +79,16 @@ $(AAR_DIR)/$(SDL_AAR): $(AAR_DIR)/$(SDL_ZIP)
 
 $(AAR_DIR)/$(SDL_ZIP):
 	curl -SsLO --output-dir $(AAR_DIR) $(SDL_ZIP_URL)
+
+.PHONY: lint
+lint:
+	cppcheck $(CPPCHECK_LINT_FLAGS) $(SRC)
+	uncrustify $(UNCRUSTIFY_CHECK_FLAGS) $(SRC)
+
+.PHONY: lint-fix
+lint-fix:
+	cppcheck $(CPPCHECK_FIX_FLAGS) $(SRC)
+	uncrustify $(UNCRUSTIFY_FIX_FLAGS) $(SRC)
 
 .PHONY: clean
 clean: clean-android clean-desktop
