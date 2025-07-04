@@ -19,11 +19,11 @@ jobs:
     steps:
     - name: Set up SDL
       id: sdl
-      uses: libsdl-org/setup-sdl@main
+      uses: libsdl-org/setup-sdl@f0131347757b3b78ed886b7f0c36b19e26aa2937 # v1
       with:
         version: ${{ env.SDL_VERSION }}
-    - name: Get project sources
-      uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - name: Configure (CMake)
       run: cmake -B build ${{ matrix.platform.flags }} -DDOWNLOAD_DEPENDENCIES=OFF
     - name: Build (CMake)
@@ -33,9 +33,10 @@ jobs:
     name: Emscripten
     runs-on: ubuntu-latest
     steps:
-      - name: Get project sources
-        uses: actions/checkout@v4
-      - uses: mymindstorm/setup-emsdk@master
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up Emscripten
+        uses: mymindstorm/setup-emsdk@6ab9eb1bda2574c4ddb79809fc9247783eaf9021 # v14
       - name: Configure (CMake)
         run: emcmake cmake -B build ${{ matrix.platform.flags }} -DDOWNLOAD_DEPENDENCIES=ON
       - name: Build (CMake)
@@ -45,16 +46,16 @@ jobs:
     name: Android
     runs-on: ubuntu-latest
     steps:
-      - name: Get project sources
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Download SDL3 Android Archive
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh -R libsdl-org/SDL release download release-${{ env.SDL_VERSION }} -p 'SDL3-devel-*-android.zip'
           unzip "SDL3-devel-${{ env.SDL_VERSION }}-android.zip" -d android-project/app/libs SDL3-${{ env.SDL_VERSION }}.aar
-      - name: Setup required Java version
-        uses: actions/setup-java@v4
+      - name: Set up Java
+        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
         with:
           distribution: 'temurin'
           java-version: '17'
