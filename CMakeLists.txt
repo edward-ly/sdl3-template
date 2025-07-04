@@ -11,7 +11,7 @@ if(DOWNLOAD_DEPENDENCIES)
     FetchContent_Declare(
         SDL3
         GIT_REPOSITORY "https://github.com/libsdl-org/SDL.git"
-        GIT_TAG "main"
+        GIT_TAG "release-3.2.16"
         EXCLUDE_FROM_ALL
     )
     FetchContent_MakeAvailable(SDL3)

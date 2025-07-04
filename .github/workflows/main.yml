@@ -2,6 +2,9 @@ name: Build
 
 on: [push, pull_request]
 
+env:
+  SDL_VERSION: 3.2.16
+
 jobs:
   desktop:
     name: ${{ matrix.platform.name }}
@@ -18,7 +21,7 @@ jobs:
       id: sdl
       uses: libsdl-org/setup-sdl@main
       with:
-        version: sdl3-head
+        version: ${{ env.SDL_VERSION }}
     - name: Get project sources
       uses: actions/checkout@v4
     - name: Configure (CMake)
@@ -48,8 +51,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh -R libsdl-org/SDL release download release-3.2.16 -p 'SDL3-devel-*-android.zip'
-          unzip "SDL3-devel-3.2.16-android.zip" -d android-project/app/libs SDL3-3.2.16.aar
+          gh -R libsdl-org/SDL release download release-${{ env.SDL_VERSION }} -p 'SDL3-devel-*-android.zip'
+          unzip "SDL3-devel-${{ env.SDL_VERSION }}-android.zip" -d android-project/app/libs SDL3-${{ env.SDL_VERSION }}.aar
       - name: Setup required Java version
         uses: actions/setup-java@v4
         with:
