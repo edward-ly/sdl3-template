@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.12.0)
-project(SDL_helloworld)
+project(SDL_helloworld
+    VERSION 0.1.0
+    LANGUAGES C
+)
+
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED True)
 
 # By configuring CMake with -DDOWNLOAD_DEPENDENCIES=ON/OFF,
 # users can choose between downloading dependencies or using system libraries
