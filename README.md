@@ -1,23 +1,20 @@
 # SDL3 Android Template
 
-A template project to assist with getting started in the development
-of mobile games/apps made in [SDL3].
+A template project that aims to make it as easy as possible to get started
+with the development of mobile games/apps made in [SDL3].
 
 Based on the [SDL_helloworld] example project.
 
 ## Build
 
-### Make Dependencies
+### Dependencies
 
-- Android
-	- [Android SDK Command-Line Tools]
-	- [OpenJDK] 17
-	<!-- - [Inkscape] -->
-- Desktop
-	- [CMake]
-- Web
-	- [CMake]
-	- [Emscripten SDK]
+- [GNU Make]
+- [CMake]
+- [Android SDK Command-Line Tools] (Android only)
+- [OpenJDK] 17 (Android only)
+- [Emscripten SDK] (Web only)
+<!-- - [Inkscape] (Android only) -->
 
 ### Android
 
@@ -45,34 +42,36 @@ run `make android-dev`
 Run `make desktop` or `make web` accordingly,
 which will generate the executable in `build/sdl-helloworld` once completed.
 
-<!--
-## Contributing
+## Development
+
+### (Optional) Set up linting tools
 
 This project uses [Cppcheck] and [Uncrustify]
 for static code analysis and formatting, respectively.
-After cloning the repository,
-add the following pre-commit hooks:
+
+The `uncrustify.cfg` file documents the currently enforced code style,
+but feel free to change the style however you like.
+
+A `make lint` command is provided to check that the code conforms to both tools,
+as well as a `make lint-fix` command to fix any errors found.
+
+You can also add the `make lint` command as a pre-commit hook:
 
 ```sh
-git clone --recurse-submodules https://github.com/edward-ly/sdl3-android-template
-cd sdl3-android-template
-cp .git/hooks/pre-commit{.sample,}
-echo '
-cppcheck --error-exitcode=1
-uncrustify -c uncrustify.cfg' >> .git/hooks/pre-commit
+echo 'make -s lint' >> .git/hooks/pre-commit
 ```
--->
 
 <!-- Links -->
 
 [SDL3]: http://libsdl.org/
 [SDL_helloworld]: https://github.com/libsdl-org/SDL_helloworld
+[GNU Make]: http://www.gnu.org/software/make/
+[CMake]: https://cmake.org/
 [Android SDK Command-Line Tools]:
 	https://developer.android.com/tools/releases/cmdline-tools
 [OpenJDK]: https://openjdk.org/
 <!-- [Inkscape]: https://inkscape.org/ -->
-[CMake]: https://cmake.org/
 [Emscripten SDK]: https://emscripten.org/
 
-<!-- [Cppcheck]: https://cppcheck.sourceforge.io/ -->
-<!-- [Uncrustify]: https://uncrustify.sourceforge.net/ -->
+[Cppcheck]: https://cppcheck.sourceforge.io/
+[Uncrustify]: https://uncrustify.sourceforge.net/
