@@ -22,7 +22,7 @@ UNCRUSTIFY_FLAGS = -c uncrustify.cfg
 UNCRUSTIFY_CHECK_FLAGS = $(UNCRUSTIFY_FLAGS) -q --check
 UNCRUSTIFY_FIX_FLAGS = $(UNCRUSTIFY_FLAGS) --no-backup
 
-SRC = main.c $$(find src -name "*.[ch]")
+SRC := $(shell git ls-files | grep \.[ch]$$)
 
 .PHONY: help
 .SILENT: help
