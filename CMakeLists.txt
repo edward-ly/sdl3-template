@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12.0)
-project(SDL_helloworld
-	VERSION 0.1.0
+project(${APP_NAME}
+	VERSION ${APP_VERSION}
 	LANGUAGES C
 )
 
@@ -17,7 +17,7 @@ if(DOWNLOAD_DEPENDENCIES)
 	FetchContent_Declare(
 		SDL3
 		GIT_REPOSITORY "https://github.com/libsdl-org/SDL.git"
-		GIT_TAG "release-3.2.16"
+		GIT_TAG "release-${SDL_VERSION}"
 		EXCLUDE_FROM_ALL
 	)
 	FetchContent_MakeAvailable(SDL3)
@@ -35,15 +35,15 @@ if(ANDROID)
 	endfunction()
 endif()
 
-add_executable(sdl-helloworld main.c)
+add_executable(${APP_ID} main.c)
 
-target_link_libraries(sdl-helloworld PRIVATE SDL3::SDL3)
+target_link_libraries(${APP_ID} PRIVATE SDL3::SDL3)
 
 # this is safe to set on all platforms, otherwise your SDL app will
 # have a terminal window pop up with it on Windows
-set_property(TARGET sdl-helloworld PROPERTY WIN32_EXECUTABLE TRUE)
+set_property(TARGET ${APP_ID} PROPERTY WIN32_EXECUTABLE TRUE)
 
 if(EMSCRIPTEN)
 	# create an HTML webpage
-	set_property(TARGET sdl-helloworld PROPERTY SUFFIX ".html")
+	set_property(TARGET ${APP_ID} PROPERTY SUFFIX ".html")
 endif()

@@ -25,7 +25,12 @@ jobs:
       with:
         version: ${{ steps.dotenv.outputs.sdl_version }}
     - name: Configure (CMake)
-      run: cmake -B build ${{ matrix.platform.flags }} -DDOWNLOAD_DEPENDENCIES=OFF
+      run: >
+        cmake -B build ${{ matrix.platform.flags }}
+        -DDOWNLOAD_DEPENDENCIES=OFF
+        -DAPP_VERSION="${{ steps.dotenv.outputs.app_version }}"
+        -DAPP_NAME="${{ steps.dotenv.outputs.app_name }}"
+        -DAPP_ID="${{ steps.dotenv.outputs.app_id }}"
     - name: Build (CMake)
       run: cmake --build build/
 
@@ -35,10 +40,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Read .env variables
+        id: dotenv
+        uses: falti/dotenv-action@a33be0b8cf6a6e6f1b82cc9f3782061ab1022be5 # v1.1.4
       - name: Set up Emscripten
         uses: mymindstorm/setup-emsdk@6ab9eb1bda2574c4ddb79809fc9247783eaf9021 # v14
       - name: Configure (CMake)
-        run: emcmake cmake -B build ${{ matrix.platform.flags }} -DDOWNLOAD_DEPENDENCIES=ON
+        run: >
+          emcmake cmake -B build ${{ matrix.platform.flags }}
+          -DDOWNLOAD_DEPENDENCIES=ON
+          -DAPP_VERSION="${{ steps.dotenv.outputs.app_version }}"
+          -DAPP_NAME="${{ steps.dotenv.outputs.app_name }}"
+          -DAPP_ID="${{ steps.dotenv.outputs.app_id }}"
+          -DSDL_VERSION="${{ steps.dotenv.outputs.sdl_version }}"
       - name: Build (CMake)
         run: cmake --build build/
 

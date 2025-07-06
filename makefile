@@ -11,6 +11,9 @@ SDL_ZIP_URL = https://github.com/libsdl-org/SDL/releases/download/release-$(SDL_
 BUILD_DIR = build
 BUILD_EXE = $(BUILD_DIR)/$(APP_ID)
 
+CMAKE_FLAGS = -DSDL_VERSION=$(SDL_VERSION) -DAPP_VERSION=$(APP_VERSION) \
+	-DAPP_NAME=$(APP_NAME) -DAPP_ID=$(APP_ID)
+
 CPPCHECK_FLAGS = --enable=warning,style,performance,portability \
 	--std=c99 --inline-suppr --check-level=exhaustive --addon=y2038.py
 CPPCHECK_LINT_FLAGS = $(CPPCHECK_FLAGS) -q --error-exitcode=1
@@ -55,12 +58,12 @@ help:
 
 .PHONY: desktop
 desktop:
-	cmake -B $(BUILD_DIR)
+	cmake -B $(BUILD_DIR) $(CMAKE_FLAGS)
 	cmake --build $(BUILD_DIR)
 
 .PHONY: web
 web:
-	emcmake cmake -B $(BUILD_DIR)
+	emcmake cmake -B $(BUILD_DIR) $(CMAKE_FLAGS)
 	cmake --build $(BUILD_DIR)
 
 .PHONY: android
