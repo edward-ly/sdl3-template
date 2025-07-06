@@ -1,7 +1,4 @@
-SDL_VERSION = 3.2.16
-
-APP_NAME = sdl-helloworld
-APP_VERSION = 0.1.0
+include .env
 
 ANDROID_DIR = android-project
 ANDROID_BUILD_DIR = $(ANDROID_DIR)/app/build/outputs/apk
@@ -12,7 +9,7 @@ SDL_ZIP = SDL3-devel-$(SDL_VERSION)-android.zip
 SDL_ZIP_URL = https://github.com/libsdl-org/SDL/releases/download/release-$(SDL_VERSION)/$(SDL_ZIP)
 
 BUILD_DIR = build
-BUILD_EXE = $(BUILD_DIR)/$(APP_NAME)
+BUILD_EXE = $(BUILD_DIR)/$(APP_ID)
 
 CPPCHECK_FLAGS = --enable=warning,style,performance,portability \
 	--std=c99 --inline-suppr --check-level=exhaustive --addon=y2038.py
