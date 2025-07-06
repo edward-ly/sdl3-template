@@ -16,6 +16,9 @@ Based on the [SDL_helloworld] example project.
 - [Emscripten SDK] (Web only)
 <!-- - [Inkscape] (Android only) -->
 
+SDL itself is not required to be installed on your system.
+It will be automatically downloaded as needed when building the app.
+
 ### Android
 
 Building the Android app requires installing the command-line tools
