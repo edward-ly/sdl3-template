@@ -11,8 +11,12 @@ SDL_ZIP_URL = https://github.com/libsdl-org/SDL/releases/download/release-$(SDL_
 BUILD_DIR = build
 BUILD_EXE = $(BUILD_DIR)/$(APP_ID)
 
-CMAKE_FLAGS = -DSDL_VERSION=$(SDL_VERSION) -DAPP_VERSION=$(APP_VERSION) \
-	-DAPP_NAME=$(APP_NAME) -DAPP_ID=$(APP_ID)
+DOWNLOAD_DEPENDENCIES ?= ON
+CMAKE_FLAGS = -DDOWNLOAD_DEPENDENCIES=$(DOWNLOAD_DEPENDENCIES) \
+	-DAPP_VERSION="$(APP_VERSION)" -DAPP_NAME="$(APP_NAME)" -DAPP_ID="$(APP_ID)"
+ifeq ($(DOWNLOAD_DEPENDENCIES),ON)
+CMAKE_FLAGS += -DSDL_VERSION="$(SDL_VERSION)"
+endif
 
 CPPCHECK_FLAGS = --enable=warning,style,performance,portability \
 	--std=c99 --inline-suppr --check-level=exhaustive --addon=y2038.py

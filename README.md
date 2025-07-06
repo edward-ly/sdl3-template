@@ -45,6 +45,9 @@ run `make android-dev`
 Run `make desktop` or `make web` accordingly,
 which will generate the executable in `build/sdl-helloworld` once completed.
 
+If you want to build the app using the system-installed version of SDL instead,
+append `DOWNLOAD_DEPENDENCIES=OFF` to the appropriate command.
+
 ## Development
 
 ### (Optional) Set up linting tools
