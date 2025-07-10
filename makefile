@@ -3,6 +3,10 @@ include .env
 ANDROID_DIR = android-project
 ANDROID_BUILD_DIR = $(ANDROID_DIR)/app/build/outputs/apk
 AAR_DIR = $(ANDROID_DIR)/app/libs
+ANDROID_SRC_DIR = $(ANDROID_DIR)/app/src/main
+ANDROID_JAVA_DIR = $(ANDROID_SRC_DIR)/java/$(subst .,/,$(APP_ID_ANDROID))
+ANDROID_ACTIVITY_FILE = $(ANDROID_JAVA_DIR)/$(APP_ACTIVITY_CLASS_NAME).java
+ANDROID_ICON_DIR = $(ANDROID_SRC_DIR)/res
 
 SDL_AAR = SDL3-$(SDL_VERSION).aar
 SDL_ZIP = SDL3-devel-$(SDL_VERSION)-android.zip
@@ -71,11 +75,46 @@ web:
 	cmake --build $(BUILD_DIR)
 
 .PHONY: android
-android: $(AAR_DIR)/$(SDL_AAR)
+android: $(AAR_DIR)/$(SDL_AAR) android-setup
 	cd $(ANDROID_DIR) && ./gradlew assembleRelease
 
+.PHONY: android-setup
+android-setup:
+	sed -i "s/\(rootProject.name = \).*/\1\"$(APP_NAME)\"/" $(ANDROID_DIR)/settings.gradle
+
+	sed -i "/<activity/{ n; s/\(android:name=\"\)[^\"]*/\1$(APP_ID_ANDROID).$(APP_ACTIVITY_CLASS_NAME)/ }" $(ANDROID_SRC_DIR)/AndroidManifest.xml
+
+	sed -i "s/\(namespace \).*/\1'$(APP_ID_ANDROID)'/" $(ANDROID_DIR)/app/build.gradle
+	sed -i "s/\(applicationId \).*/\1'$(APP_ID_ANDROID)'/" $(ANDROID_DIR)/app/build.gradle
+	sed -i "s/\(versionCode \).*/\1$(APP_VERSION_CODE_ANDROID)/" $(ANDROID_DIR)/app/build.gradle
+	sed -i "s/\(versionName \).*/\1'$(APP_VERSION)'/" $(ANDROID_DIR)/app/build.gradle
+	sed -i "s/\(-DAPP_VERSION=\)[^']*/\1$(APP_VERSION)/" $(ANDROID_DIR)/app/build.gradle
+	sed -i "s/\(-DAPP_NAME=\)[^']*/\1$(APP_NAME)/" $(ANDROID_DIR)/app/build.gradle
+	sed -i "s/\(-DAPP_ID=\)[^']*/\1$(APP_ID)/" $(ANDROID_DIR)/app/build.gradle
+	sed -i "s/\(SDL3-\).*\(\.aar\)/\1$(SDL_VERSION)\2/" $(ANDROID_DIR)/app/build.gradle
+
+	sed -i "s/[^>]*\(<\/string>\)/$(APP_NAME)\1/" $(ANDROID_ICON_DIR)/values/strings.xml
+
+	# inkscape -w 48 -h 48 $(ANDROID_ICON) -o $(ANDROID_ICON_DIR)/mipmap-mdpi/ic_launcher.png
+	# inkscape -w 72 -h 72 $(ANDROID_ICON) -o $(ANDROID_ICON_DIR)/mipmap-hdpi/ic_launcher.png
+	# inkscape -w 96 -h 96 $(ANDROID_ICON) -o $(ANDROID_ICON_DIR)/mipmap-xhdpi/ic_launcher.png
+	# inkscape -w 144 -h 144 $(ANDROID_ICON) -o $(ANDROID_ICON_DIR)/mipmap-xxhdpi/ic_launcher.png
+	# inkscape -w 192 -h 192 $(ANDROID_ICON) -o $(ANDROID_ICON_DIR)/mipmap-xxxhdpi/ic_launcher.png
+
+	rm -rf $(ANDROID_SRC_DIR)/java
+	mkdir -p $(ANDROID_JAVA_DIR)
+	echo "package $(APP_ID_ANDROID);" > $(ANDROID_ACTIVITY_FILE)
+	echo "" >> $(ANDROID_ACTIVITY_FILE)
+	echo "import org.libsdl.app.SDLActivity;" >> $(ANDROID_ACTIVITY_FILE)
+	echo "" >> $(ANDROID_ACTIVITY_FILE)
+	echo "public class $(APP_ACTIVITY_CLASS_NAME) extends SDLActivity {" >> $(ANDROID_ACTIVITY_FILE)
+	echo "	protected String[] getLibraries() {" >> $(ANDROID_ACTIVITY_FILE)
+	echo "		return new String[] { \"SDL3\", \"$(APP_ID)\" };" >> $(ANDROID_ACTIVITY_FILE)
+	echo "	}" >> $(ANDROID_ACTIVITY_FILE)
+	echo "}" >> $(ANDROID_ACTIVITY_FILE)
+
 .PHONY: android-dev
-android-dev: $(AAR_DIR)/$(SDL_AAR)
+android-dev: $(AAR_DIR)/$(SDL_AAR) android-setup
 	cd $(ANDROID_DIR) && ./gradlew installDebug
 
 .PHONY: android-devclean
