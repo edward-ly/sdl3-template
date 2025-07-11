@@ -1,6 +1,6 @@
 include .env
 
-ANDROID_DIR = android-project
+ANDROID_DIR = android
 ANDROID_BUILD_DIR = $(ANDROID_DIR)/app/build/outputs/apk
 AAR_DIR = $(ANDROID_DIR)/app/libs
 ANDROID_SRC_DIR = $(ANDROID_DIR)/app/src/main
