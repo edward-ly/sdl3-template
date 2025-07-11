@@ -5,6 +5,9 @@
 # Android archives
 *.aar
 
+# Android icon folders
+mipmap-*dpi/
+
 # Created by https://www.toptal.com/developers/gitignore/api/android,androidstudio,archives,c,cmake,linux,test
 # Edit at https://www.toptal.com/developers/gitignore?templates=android,androidstudio,archives,c,cmake,linux,test
 
