@@ -1,7 +1,7 @@
-# SDL3 Android Template
+# SDL3 App Template
 
 A template project that aims to make it as easy as possible to get started
-with the development of mobile games/apps made in [SDL3].
+with the development of cross-platform games/apps made in [SDL3].
 
 Based on the [SDL_helloworld] example project.
 
@@ -13,8 +13,8 @@ Based on the [SDL_helloworld] example project.
 - [CMake]
 - [Android SDK Command-Line Tools] (Android only)
 - [OpenJDK] 17 (Android only)
+- [Inkscape] (Android only)
 - [Emscripten SDK] (Web only)
-<!-- - [Inkscape] (Android only) -->
 
 SDL itself is not required to be installed on your system.
 It will be automatically downloaded as needed when building the app.
@@ -34,7 +34,7 @@ sudo sdkmanager --licenses
 
 Afterwards, run `make android`,
 which will generate the `.apk` binaries in
-`android-project/app/build/outputs/apk`.
+`android/app/build/outputs/apk`.
 
 Or, to install the app directly onto a mobile device for debugging,
 run `make android-dev`
@@ -49,6 +49,25 @@ If you want to build the app using the system-installed version of SDL instead,
 append `DOWNLOAD_DEPENDENCIES=OFF` to the appropriate command.
 
 ## Development
+
+### Initializing your app
+
+Customizing the template for your app just requires opening the `.env` file
+and changing the template values to your liking.
+
+You should also create your own icons for the Android app
+(we recommend [Inkscape] for creating scalable vector images).
+Save the finished icons in the `assets/` directory,
+overwriting the template icons.
+
+Then,
+you can run `make android` to apply the changes to the Android project files
+and build your custom Android app.
+Commit the changes to the repository afterwards.
+
+The `makefile` itself contains scripts for performing common operations
+including building and installing the app for all supported platforms.
+Run `make` to see the list of available options.
 
 ### (Optional) Set up linting tools
 
@@ -76,7 +95,7 @@ echo 'make -s lint' >> .git/hooks/pre-commit
 [Android SDK Command-Line Tools]:
 	https://developer.android.com/tools/releases/cmdline-tools
 [OpenJDK]: https://openjdk.org/
-<!-- [Inkscape]: https://inkscape.org/ -->
+[Inkscape]: https://inkscape.org/
 [Emscripten SDK]: https://emscripten.org/
 
 [Cppcheck]: https://cppcheck.sourceforge.io/
