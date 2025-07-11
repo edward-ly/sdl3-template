@@ -12,6 +12,9 @@ SDL_AAR = SDL3-$(SDL_VERSION).aar
 SDL_ZIP = SDL3-devel-$(SDL_VERSION)-android.zip
 SDL_ZIP_URL = https://github.com/libsdl-org/SDL/releases/download/release-$(SDL_VERSION)/$(SDL_ZIP)
 
+APP_ICON = assets/ic_launcher.svg
+APP_ICON_ROUND = assets/ic_launcher_round.svg
+
 BUILD_DIR = build
 BUILD_EXE = $(BUILD_DIR)/$(APP_ID)
 
@@ -95,11 +98,16 @@ android-setup:
 
 	sed -i "s/[^>]*\(<\/string>\)/$(APP_NAME)\1/" $(ANDROID_ICON_DIR)/values/strings.xml
 
-	# inkscape -w 48 -h 48 $(ANDROID_ICON) -o $(ANDROID_ICON_DIR)/mipmap-mdpi/ic_launcher.png
-	# inkscape -w 72 -h 72 $(ANDROID_ICON) -o $(ANDROID_ICON_DIR)/mipmap-hdpi/ic_launcher.png
-	# inkscape -w 96 -h 96 $(ANDROID_ICON) -o $(ANDROID_ICON_DIR)/mipmap-xhdpi/ic_launcher.png
-	# inkscape -w 144 -h 144 $(ANDROID_ICON) -o $(ANDROID_ICON_DIR)/mipmap-xxhdpi/ic_launcher.png
-	# inkscape -w 192 -h 192 $(ANDROID_ICON) -o $(ANDROID_ICON_DIR)/mipmap-xxxhdpi/ic_launcher.png
+	inkscape --export-background-opacity=0 -w 48 -h 48 $(APP_ICON) -o $(ANDROID_ICON_DIR)/mipmap-mdpi/ic_launcher.png
+	inkscape --export-background-opacity=0 -w 72 -h 72 $(APP_ICON) -o $(ANDROID_ICON_DIR)/mipmap-hdpi/ic_launcher.png
+	inkscape --export-background-opacity=0 -w 96 -h 96 $(APP_ICON) -o $(ANDROID_ICON_DIR)/mipmap-xhdpi/ic_launcher.png
+	inkscape --export-background-opacity=0 -w 144 -h 144 $(APP_ICON) -o $(ANDROID_ICON_DIR)/mipmap-xxhdpi/ic_launcher.png
+	inkscape --export-background-opacity=0 -w 192 -h 192 $(APP_ICON) -o $(ANDROID_ICON_DIR)/mipmap-xxxhdpi/ic_launcher.png
+	inkscape --export-background-opacity=0 -w 48 -h 48 $(APP_ICON_ROUND) -o $(ANDROID_ICON_DIR)/mipmap-mdpi/ic_launcher_round.png
+	inkscape --export-background-opacity=0 -w 72 -h 72 $(APP_ICON_ROUND) -o $(ANDROID_ICON_DIR)/mipmap-hdpi/ic_launcher_round.png
+	inkscape --export-background-opacity=0 -w 96 -h 96 $(APP_ICON_ROUND) -o $(ANDROID_ICON_DIR)/mipmap-xhdpi/ic_launcher_round.png
+	inkscape --export-background-opacity=0 -w 144 -h 144 $(APP_ICON_ROUND) -o $(ANDROID_ICON_DIR)/mipmap-xxhdpi/ic_launcher_round.png
+	inkscape --export-background-opacity=0 -w 192 -h 192 $(APP_ICON_ROUND) -o $(ANDROID_ICON_DIR)/mipmap-xxxhdpi/ic_launcher_round.png
 
 	rm -rf $(ANDROID_SRC_DIR)/java
 	mkdir -p $(ANDROID_JAVA_DIR)
