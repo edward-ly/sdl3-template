@@ -2,11 +2,10 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 
-# Android archives
-*.aar
-
-# Android icon folders
-mipmap-*dpi/
+# Android assets folders
+android/app/libs/
+android/app/src/main/java/
+android/app/src/main/res/mipmap-*dpi/
 
 # Created by https://www.toptal.com/developers/gitignore/api/android,androidstudio,archives,c,cmake,linux,test
 # Edit at https://www.toptal.com/developers/gitignore?templates=android,androidstudio,archives,c,cmake,linux,test

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: none
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
 # SDL3 App Template
 
 A template project that aims to make it as easy as possible to get started

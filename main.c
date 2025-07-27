@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: none
+//
+// SPDX-License-Identifier: CC0-1.0
+
 #define SDL_MAIN_USE_CALLBACKS
 
 #include <SDL3/SDL.h>

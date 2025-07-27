@@ -1,0 +1,26 @@
+# SPDX-FileCopyrightText: none
+#
+# SPDX-License-Identifier: CC0-1.0
+
+version = 1
+SPDX-PackageName = "sdl3-template"
+SPDX-PackageSupplier = "Edward Ly <contact@edward.ly>"
+SPDX-PackageDownloadLocation = "https://github.com/edward-ly/sdl3-template"
+
+[[annotations]]
+path = ["android/app/src/main/AndroidManifest.xml", "android/app/src/main/res/**/*.xml"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "none"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["android/gradlew", "android/gradlew.bat", "android/gradle/wrapper/gradle-wrapper.jar"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2015 the original author or authors"
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = ["assets/ic_launcher.svg", "assets/ic_launcher_round.svg"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 Edward Ly <contact@edward.ly>"
+SPDX-License-Identifier = "CC0-1.0"
